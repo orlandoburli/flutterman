@@ -1,10 +1,9 @@
 {
-  "name": "@oburlijr/flutterman",
+  "name": "flutterman",
   "version": "0.0.2",
   "description": "Flutter SDK Manager for developers",
   "main": "src/main/node/index.js",
   "bin": {
-    "@oburlijr/flutterman": "bin/flutterman",
     "flutterman": "bin/flutterman"
   },
   "scripts": {
