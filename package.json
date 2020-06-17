@@ -1,0 +1,46 @@
+{
+  "name": "@oburlijr/flutterman",
+  "version": "0.0.2",
+  "description": "Flutter SDK Manager for developers",
+  "main": "src/main/node/index.js",
+  "bin": {
+    "@oburlijr/flutterman": "bin/flutterman",
+    "flutterman": "bin/flutterman"
+  },
+  "scripts": {
+    "bin": "./index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orlandoburli/flutterman.git"
+  },
+  "keywords": [
+    "flutter",
+    "cli",
+    "dev",
+    "sdk"
+  ],
+  "author": "Orlando Burli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/orlandoburli/flutterman/issues"
+  },
+  "homepage": "https://github.com/orlandoburli/flutterman#readme",
+  "dependencies": {
+    "adm-zip": "^0.4.14",
+    "chalk": "^4.1.0",
+    "cli-progress": "^3.8.2",
+    "current-os": "^1.1.0",
+    "esm": "^3.2.25",
+    "node-fetch": "^2.6.0",
+    "ora": "^4.0.4",
+    "prompts": "^2.3.2",
+    "request": "^2.88.2",
+    "request-progress": "^3.0.0"
+  }
+}
