@@ -2,13 +2,15 @@ const { printBrand, printVersionInstaled } = require('./helpers/printHelpers')
 const { getFlutterVersions, getFlutterChannels } = require("./api/flutterVersions");
 const { selectFlutterVersion, selectFlutterChannel, confirmCurrentVersion } = require('./input/inputController');
 const { downloadFlutterVersion } = require('./api/downloadHelper');
-const { unzip } = require('./api/unpackHelper');
+const { unzip } = require('./api/unpackHelper2');
 const { addVersion, versionsExistsLocally, setCurrentVersion } = require('./api/settings');
 const { changeShellFlutterVersion } = require('./api/shell');
+const { configBash } = require('./utils/bash');
 
 exports.main = async (args) => {
   printBrand()
 
+  await configBash()
   const versions = await getFlutterVersions()
   const channels = await getFlutterChannels(versions)
   const channel = await selectFlutterChannel(channels)
@@ -19,11 +21,8 @@ exports.main = async (args) => {
   if (!localVersion) {
     const downloadedFile = await downloadFlutterVersion(versions.base_url, version)
     await unzip(downloadedFile.fileName)
-  } else {
     await addVersion(version)
   }
-
-  await addVersion(version)
 
   if (changeCurrentVersion) {
     await setCurrentVersion(version)

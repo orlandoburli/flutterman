@@ -1,4 +1,5 @@
 const chalk = require("chalk")
+const logSymbols = require('log-symbols');
 
 exports.printBrand = () => {
   console.log(chalk.bold('**********************************************'))
@@ -12,5 +13,5 @@ exports.printInstructions = () => {
 }
 
 exports.printVersionInstaled = (version) => {
-  console.log(`Version ${chalk.bold(version.version)} already installed`)
+  console.log(`${logSymbols.success} Version ${chalk.bold(version.version)} successfuly configured!`)
 }

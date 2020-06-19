@@ -20,12 +20,13 @@ exports.unzip = (fileName) => new Promise((resolve, reject) => {
 
   extract(zip, pathToUnzip)
     .then(() => {
-      spinner.succeed('Files successfully extracted!')
-
-      resolve({
-        success: true,
-        path: pathToUnzip
-      })
+      setTimeout(()=> {
+        spinner.succeed('Files successfully extracted!')
+        resolve({
+          success: true,
+          path: pathToUnzip
+        })
+      }, 2000)
     })
     .catch(reject)
 })

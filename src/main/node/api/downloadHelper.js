@@ -19,7 +19,6 @@ exports.downloadFlutterVersion = (base_url, version) => new Promise((resolve, re
   if (!fs.existsSync(pathName)) fs.mkdirSync(pathName, { recursive: true })
 
   if (fs.existsSync(fileName)) {
-    // TODO: Verificar se é pra baixar de novo... montar uma tabela local com as versões baixadas
     fs.unlinkSync(fileName)
   }
 
