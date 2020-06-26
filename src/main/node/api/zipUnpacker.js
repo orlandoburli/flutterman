@@ -3,11 +3,15 @@ const fs = require('fs')
 const ora = require('ora')
 const DecompressZip = require('decompress-zip');
 
-exports.unzip = (fileName) => new Promise((resolve, reject) => {
+const ZIP_EXTENSION = '.zip';
+
+exports.pathFromZip = (fileName) => fileName.substring(0, fileName.length - ZIP_EXTENSION.length)
+
+exports.unpackZipFile = (fileName) => new Promise((resolve, reject) => {
 
   const spinner = ora('Extracting files, please wait...').start();
 
-  const pathToUnzip = fileName.substring(0, fileName.length - 4)
+  const pathToUnzip = this.pathFromZip(fileName)
 
   if (fs.existsSync(pathToUnzip)) fs.rmdirSync(pathToUnzip, { recursive: true })
 

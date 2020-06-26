@@ -1,7 +1,11 @@
 const { flutterManHome } = require("../helpers/pathHelpers")
 
 const fs = require('fs')
-const { isWindows } = require("current-os")
+const { isWindows, isLinux, isOSX } = require("current-os")
+
+const ZIP_EXTENSION = '.zip';
+const TAR_XZ_EXTENSION = '.tar.xz';
+const TAR_GZ_EXTENSION = '.tar.gz';
 
 exports.prepareFlutterSdkHome = async () => {
   const home = `${flutterManHome()}/sdk`
@@ -40,7 +44,21 @@ exports.checkExecutables = async () => {
   } else {
     fs.chmodSync(`${sdkCurrentPath}/flutter/bin/flutter`, 0o777)
     fs.chmodSync(`${sdkCurrentPath}/flutter/bin/cache/dart-sdk/bin/dart`, 0o777)
+    fs.chmodSync(`${sdkCurrentPath}/flutter/bin/cache/dart-sdk/bin/pub`, 0o777)
+    fs.chmodSync(`${sdkCurrentPath}/flutter/bin/cache/artifacts/ios-deploy/ios-deploy`, 0o777)
   }
 }
 
-exports.versionPath = (version) => `${flutterManHome()}/sdk/versions/${version.archive.substring(0, version.archive.length - 4)}`
+exports.versionPath = (version) => {
+  let fileName = version.archive
+
+  if (fileName.endsWith(ZIP_EXTENSION)) {
+    fileName = fileName.substring(0, fileName.length - ZIP_EXTENSION.length)
+  } else if (fileName.endsWith(TAR_XZ_EXTENSION)) {
+    fileName = fileName.substring(0, fileName.length - TAR_XZ_EXTENSION.length)
+  } else if (fileName.endsWith(TAR_GZ_EXTENSION)) {
+    fileName = fileName.substring(0, fileName.length - TAR_GZ_EXTENSION.length)
+  }
+
+  return `${flutterManHome()}/sdk/versions/${fileName}`
+}

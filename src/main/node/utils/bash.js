@@ -7,7 +7,7 @@ const flutterRc = `
 
 # This is a flutterman setup. Do not modify.
 FLUTTER_HOME=$HOME/.flutter/sdk/current/flutter
-export PATH=$FLUTTER_HOME/bin:$PATH
+export PATH=$FLUTTER_HOME/bin:$FLUTTER_HOME/bin/cache/dart-sdk/bin:$PATH
 `
 
 exports.configBash = async () => {

@@ -1,6 +1,6 @@
 {
   "name": "flutterman",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "Flutter SDK Manager for developers",
   "main": "src/main/node/index.js",
   "bin": {
@@ -32,9 +32,12 @@
   "homepage": "https://github.com/orlandoburli/flutterman#readme",
   "dependencies": {
     "adm-zip": "^0.4.14",
+    "all-unpacker": "^0.1.3",
     "chalk": "^4.1.0",
     "cli-progress": "^3.8.2",
     "current-os": "^1.1.0",
+    "decompress": "^4.2.1",
+    "decompress-tarxz": "^3.0.0",
     "decompress-zip": "^0.2.2",
     "esm": "^3.2.25",
     "log-symbols": "^4.0.0",

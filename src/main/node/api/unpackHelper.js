@@ -1,32 +1,30 @@
-require('../utils/colors')
-const fs = require('fs')
-const ora = require('ora')
-const AdmZip = require('adm-zip')
+const { unpackZipFile } = require('./zipUnpacker');
+const { unpackTarXzFile } = require('./tarXzUnpacker');
 
-const extract = (zip, pathToUnzip) =>
-  Promise.resolve(zip.extractAllToAsync(pathToUnzip, true))
+const ZIP_EXTENSION = '.zip';
+const TAR_XZ_EXTENSION = '.tar.xz';
+const TAR_GZ_EXTENSION = '.tar.gz';
 
-exports.unzip = (fileName) => new Promise((resolve, reject) => {
+exports.pathFromZip = (fileName) => {
+  if (fileName.endsWith(ZIP_EXTENSION)) {
+    return fileName.substring(0, fileName.length - ZIP_EXTENSION.length)
+  } else if (fileName.endsWith(TAR_XZ_EXTENSION)) {
+    return fileName.substring(0, fileName.length - TAR_XZ_EXTENSION.length)
+  } else if (fileName.endsWith(TAR_GZ_EXTENSION)) {
+    return fileName.substring(0, fileName.length - TAR_GZ_EXTENSION.length)
+  }
+}
 
-  const spinner = ora('Extracting files, please wait...').start();
+exports.unpack = (fileName) => {
+  let zipMethod = undefined
 
-  const pathToUnzip = fileName.substring(0, fileName.length - 4)
+  if (fileName.endsWith(ZIP_EXTENSION)) {
+    zipMethod = unpackZipFile
+  } else if (fileName.endsWith(TAR_XZ_EXTENSION)) {
+    zipMethod = unpackTarXzFile
+  } else if (fileName.endsWith(TAR_GZ_EXTENSION)) {
+    // TODO
+  }
 
-  if (fs.existsSync(pathToUnzip)) fs.rmdirSync(pathToUnzip, { recursive: true })
-
-  fs.mkdirSync(pathToUnzip, { recursive: true })
-
-  const zip = new AdmZip(fileName)
-
-  extract(zip, pathToUnzip)
-    .then(() => {
-      setTimeout(()=> {
-        spinner.succeed('Files successfully extracted!')
-        resolve({
-          success: true,
-          path: pathToUnzip
-        })
-      }, 2000)
-    })
-    .catch(reject)
-})
+  return zipMethod ? zipMethod(fileName) : Promise.reject({ success: false, message: `Extension not implemented ${fileName}` })
+}
